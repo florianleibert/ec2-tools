@@ -1,13 +1,7 @@
 package de.leibert.cloud.aws.security
 
-import scala.Array
-
-import com.amazonaws.auth.BasicAWSCredentials
-import com.amazonaws.services.ec2.{AmazonEC2, AmazonEC2Client}
-import com.amazonaws.services.ec2.model.{DescribeSecurityGroupsRequest, IpPermission, AuthorizeSecurityGroupIngressRequest}
-import com.amazonaws.services.s3.{AmazonS3Client, AmazonS3}
-import org.clapper.argot.{ArgotUsageException, ArgotParser}
-import org.clapper.argot.ArgotConverters._
+import com.amazonaws.services.ec2.AmazonEC2
+import com.amazonaws.services.ec2.model._
 
 /**
  * Simple security for ec2.
@@ -17,6 +11,7 @@ object SecurityGroupUtils {
 
   def exists(ec2: AmazonEC2, groupId: String, proto: String, ipRange: String, fromPort: Int, toPort: Int)
     : Boolean = {
+
     val descRequest = new DescribeSecurityGroupsRequest()
     descRequest.getGroupIds.add(groupId)
 
@@ -27,11 +22,12 @@ object SecurityGroupUtils {
     import scala.collection.JavaConversions._
 
     return permissions.filter({x => (x.getToPort == toPort &&
-                                     x.getIpProtocol.toLowerCase == proto.toLowerCase &&
-                                     x.getFromPort == fromPort &&
-                                     x.getToPort == toPort)})
+                                      x.getIpProtocol.toLowerCase == proto.toLowerCase &&
+                                      x.getFromPort == fromPort &&
+                                      x.getToPort == toPort)
+                              })
              .flatMap(_.getIpRanges)
-             .filter({x => x == ipRange }).size == 1
+             .filter({x => x == ipRange}).size == 1
   }
 
   def authorize(ec2: AmazonEC2, groupId: String, proto: String, ipRange: String, fromPort: Int, toPort: Int) {

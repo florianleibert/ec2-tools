@@ -1,10 +1,11 @@
 package de.leibert.cloud.aws.security
 
+import collection.mutable
+
 import com.amazonaws.services.ec2.{AmazonEC2, AmazonEC2Client}
 import com.amazonaws.auth.BasicAWSCredentials
 import org.clapper.argot.{ArgotUsageException, ArgotParser}
 import org.clapper.argot.ArgotConverters._
-import collection.mutable
 
 /**
  * @author Florian Leibert (flo@leibert.de)
