@@ -11,3 +11,14 @@ project/plugins/project/
 
 # Scala-IDE specific
 .scala_dependencies
+
+# other stuff
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+*.iws
+.DS_Store
+log/
+target/
